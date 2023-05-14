@@ -1,0 +1,8 @@
+scikit-learn==1.0.2
+nltk==3.7
+pytest==7.2.0
+stanza==1.4.0
+inflect
+requests==2.25.1
+sentence_transformers==2.2.2
+numpy==1.19.1
