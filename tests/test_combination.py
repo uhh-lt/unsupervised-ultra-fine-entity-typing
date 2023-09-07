@@ -362,3 +362,96 @@ predictions_test_open_type_with_jobimtext_headword_prepro_includeisas_inclmentio
 
         assert set(v['gold']) == set(predictions_ufet_check_[k]['gold'])
         assert set(v['gold']) == set(predictions_ufet[k]['gold'])
+        
+        
+### tests for the converted cases:
+def test_converted():
+    # test-1: all predictions are in the original predictions
+    # wo limit wo exclude
+    with open('predictions_combination/predictions_test_combination_wo_limit_wo_exclude.json', 'r') as f:    
+        predictions_combination_wo_limit_wo_exclude = json.load(f)
+
+    with open('predictions_combination/predictions_test_combination_wo_limit_wo_exclude_converted.json', 'r') as f:    
+        predictions_combination_wo_limit_wo_exclude_converted = json.load(f)
+        
+    # with limit wo exclude
+    with open('predictions_combination/predictions_test_combination_limit5_wo_exclude.json', 'r') as f:    
+        predictions_combination_limit5_wo_exclude = json.load(f)
+
+    with open('predictions_combination/predictions_test_combination_limit5_wo_exclude_converted.json', 'r') as f:    
+        predictions_combination_limit5_wo_exclude_converted = json.load(f)
+        
+    # wo limit with exclude
+    with open('predictions_combination/predictions_test_combination_wo_limit_exclude.json', 'r') as f:    
+        predictions_combination_wo_limit_exclude = json.load(f)
+
+    with open('predictions_combination/predictions_test_combination_wo_limit_exclude_converted.json', 'r') as f:    
+        predictions_combination_wo_limit_exclude_converted = json.load(f)
+        
+    # with limit with exclude
+    with open('predictions_combination/predictions_test_combination_limit5_exclude.json', 'r') as f:    
+        predictions_combination_limit5_exclude = json.load(f)
+
+    with open('predictions_combination/predictions_test_combination_limit5_exclude_converted.json', 'r') as f:    
+        predictions_combination_limit5_exclude_converted = json.load(f)
+    
+    f = open('../open_type/release/crowd/test.json', "r")
+    data = [json.loads(sent.strip()) for sent in f.readlines()]
+    
+    # test-1: all converted info should be in the original ones
+    for k, v in predictions_combination_wo_limit_wo_exclude_converted.items():
+        assert set(v['gold']) == set(predictions_combination_wo_limit_wo_exclude[k]['gold'])
+        assert set(v['pred']) == set(predictions_combination_wo_limit_wo_exclude[k]['pred'])
+        
+        original_predictions = predictions_combination_wo_limit_wo_exclude[k]['pred']
+        for p in v['pred']:
+            assert p in original_predictions
+        
+            
+    for k, v in predictions_combination_limit5_wo_exclude_converted.items():
+        assert set(v['gold']) == set(predictions_combination_limit5_wo_exclude[k]['gold'])
+        assert set(v['pred']) == set(predictions_combination_limit5_wo_exclude[k]['pred'])
+        
+        original_predictions = predictions_combination_limit5_wo_exclude[k]['pred']
+        for p in v['pred']:
+            assert p in original_predictions
+            
+    for k, v in predictions_combination_wo_limit_exclude_converted.items():
+        assert set(v['gold']) == set(predictions_combination_wo_limit_exclude[k]['gold'])
+        assert set(v['pred']) == set(predictions_combination_wo_limit_exclude[k]['pred'])
+        
+        original_predictions = predictions_combination_wo_limit_exclude[k]['pred']
+        for p in v['pred']:
+            assert p in original_predictions
+            
+    for k, v in predictions_combination_limit5_exclude_converted.items():
+        assert set(v['gold']) == set(predictions_combination_limit5_exclude[k]['gold'])
+        assert set(v['pred']) == set(predictions_combination_limit5_exclude[k]['pred'])
+        
+        original_predictions = predictions_combination_limit5_exclude[k]['pred']
+        for p in v['pred']:
+            assert p in original_predictions
+
+
+    
+    # test-2: pronouns should not be in the predictions for exclude cases
+    pronouns = {'i', 'me', 'myself', 'we', 'us', 'ourselves', 'he', 'him', 'himself', 'she', 'her', 'herself',
+                'it', 'itself', 'they', 'them', 'themselves', 'you', 'yourself'}
+    count = 0
+    for mention_info in data:
+        if mention_info['mention_span'].lower() in pronouns:
+            assert mention_info['annot_id'] not in predictions_combination_wo_limit_exclude.keys()
+            assert mention_info['annot_id'] not in predictions_combination_limit5_exclude.keys()
+            
+            assert mention_info['annot_id'] not in predictions_combination_wo_limit_exclude_converted.keys()
+            assert mention_info['annot_id'] not in predictions_combination_limit5_exclude_converted.keys()
+            continue
+        count += 1
+
+    assert count == len(predictions_combination_wo_limit_exclude_converted)
+    assert count == len(predictions_combination_limit5_exclude_converted)
+    assert count == 1210
+    
+    
+    assert 1998 == len(predictions_combination_wo_limit_wo_exclude_converted)
+    assert 1998 == len(predictions_combination_limit5_wo_exclude_converted)

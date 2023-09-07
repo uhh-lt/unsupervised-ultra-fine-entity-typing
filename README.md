@@ -57,6 +57,7 @@ http://nlp.cs.washington.edu/entity_type. Download best model and outputs from "
 ```
 bash scripts/combination.sh
 ```
+- Note that before computing scores, first convert them to set, e.g. as done in convert_combination.ipynb.
 - Compute the scores in the same way as in step 6.
 
 #### Note for License
