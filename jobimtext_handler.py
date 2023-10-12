@@ -3,6 +3,10 @@ import logging
 import time
 
 
+# added this part for #PRP tag experiment
+# pronouns = {'i', 'me', 'myself', 'we', 'us', 'ourselves', 'he', 'him', 'himself', 'she', 'her', 'herself',
+#                 'it', 'itself', 'they', 'them', 'themselves', 'you', 'yourself'}
+
 # for a query mention and cluster type, returns a response from jobimtext api
 # -- http://ltmaggie.informatik.uni-hamburg.de/jobimviz/#
 # http://ltmaggie.informatik.uni-hamburg.de/jobimtext/jobimviz-web-demo/api-and-demo-documentation/#API
@@ -14,6 +18,11 @@ def get_senses_from_jobimtext(mention, cluster_type):
     if len(mention.split()) > 1:
         r_url = 'http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/ccDepNEMWE/jo/senses/' \
                  + mention + '%23MWE' + '?sensetype=CW(' + cluster_type + ')&format=json'
+#     added this part for #PRP tag experiment
+#     elif mention.lower() in pronouns:
+#         r_url = 'http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/ccDepNEMWE/jo/senses/' \
+#                  + mention + '%23PRP' + '?sensetype=CW(' + cluster_type + ')&format=json'
+#     added this part
     else:
         r_url = 'http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/ccDepNEMWE/jo/senses/' \
                  + mention + '%23NN' + '?sensetype=CW(' + cluster_type + ')&format=json'

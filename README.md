@@ -61,5 +61,5 @@ bash scripts/combination.sh
 - Compute the scores in the same way as in step 6.
 
 #### Note for License
-- Disclaimer: before the use, be sure to check licenses of all dependencies in the requirements.txt file and the license of dataset and code provided by Choi et al. (2018).
+- Disclaimer: before the use, be sure to check licenses of all dependencies, dependencies in the requirements.txt file, and the license of dataset and code provided by Choi et al. (2018).
 
