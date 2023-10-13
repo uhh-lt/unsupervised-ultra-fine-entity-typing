@@ -1,5 +1,5 @@
 # Experiments for Unsupervised Ultra Fine Entity Typing
-This repository contains implemention for Unsupervised Ultra Fine Entity Typing with JoBimText API desribed in the paper Unsupervised Ultra-Fine Entity Typing with Distributionally Induced Word Senses (pdf soon).
+This repository contains implemention for Unsupervised Ultra Fine Entity Typing with JoBimText API desribed in the paper Unsupervised Ultra-Fine Entity Typing with Distributionally Induced Word Senses (link soon).
 
 ## Configuration
 
