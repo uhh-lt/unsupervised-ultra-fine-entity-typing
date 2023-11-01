@@ -1,5 +1,5 @@
 # Experiments for Unsupervised Ultra Fine Entity Typing
-This repository contains implemention for Unsupervised Ultra Fine Entity Typing with JoBimText API desribed in the paper Unsupervised Ultra-Fine Entity Typing with Distributionally Induced Word Senses (link soon).
+This repository contains an implemention for Unsupervised Ultra Fine Entity Typing with JoBimText API desribed in the paper Unsupervised Ultra-Fine Entity Typing with Distributionally Induced Word Senses (link soon).
 
 ## Configuration
 
@@ -33,6 +33,7 @@ pytest tests/test_open_type_et_with_jobimtext.py
 ```
 bash scripts/open_type_et_with_jobimtext.sh
 ```
+- Note that for PRP scores, see the commented out lines in jobimtext_handler.py.
 
 ### 5. Clone open_type
 
@@ -41,7 +42,6 @@ bash scripts/open_type_et_with_jobimtext.sh
 cd ../open_type
 git clone https://github.com/uwnlp/open_type.git
 ```
-
 ### 6. Compute scores
 - Comment out the lines 78, 81, 82 in ../open_type/open_type/scorer.py files, since only P, R, and F1 scores will be computed.
 - To compute the scores (assumed your predictions are stored in "predictions_jobimtext/predictions_open_type_with_jobimtext.json"):
@@ -49,15 +49,19 @@ git clone https://github.com/uwnlp/open_type.git
 cd ../open_type/open_type
 python scorer.py ../../unsupervised-ultra-fine-entity-typing/predictions_jobimtext/predictions_open_type_with_jobimtext
 ```
-
 ### 7. Compute combination
 - The best model and its predictions of model by Choi et al. 2018 are available, again, at
 http://nlp.cs.washington.edu/entity_type. Download best model and outputs from "Pretrained model / outputs", or alternatively here http://nlp.cs.washington.edu/entity_type/model/best_model.tar.gz.
 - Extract the downloaded compressed folder and move it to ../open_type/.
+- Change the python and output directories in scripts/combination.sh, accordingly.
 ```
 bash scripts/combination.sh
 ```
 - Note that before computing scores, first convert them to set, e.g. as done in convert_combination.ipynb.
+- Compute the scores in the same way as in step 6.
+
+#### Note for computing without pronouns scores
+- To get without pronouns predictions for jobimtext predictions and/or Choi et al. (2018) predictions, use "exclude_pronouns" function in the combination.py file, e.g. as done in wo_pronouns.ipynb.
 - Compute the scores in the same way as in step 6.
 
 #### Note for License
